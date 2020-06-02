@@ -21,7 +21,7 @@
     "builder-util-runtime": "workspace:*",
     "chalk": "^3.0.0",
     "ci-info": "^2.0.0",
-    "decompress-zip": "^0.2.2",
+    "decompress-zip": "^0.3.2",
     "depcheck": "^0.9.2",
     "dmg-builder": "workspace:*",
     "electron-builder": "workspace:*",
