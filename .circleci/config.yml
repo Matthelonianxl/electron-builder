@@ -1,78 +1,13 @@
-version: 2
-
-jobs:
-  build:
-    docker:
-      - image: circleci/node:12.16.1
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - install-dep-cache-{{ checksum "yarn.lock" }}-{{ checksum ".yarn/releases/yarn-sources.js" }}
-      - restore_cache:
-          keys:
-            - v-8.2.0-electron
-      - run:
-          command: YARN_CHECKSUM_BEHAVIOR=ignore node .yarn/releases/yarn-sources.js install
-      - run:
-          command: node .yarn/releases/yarn-sources.js pretest
-      - run:
-          command: cp .pnp.js .yarn/.pnp.js
-      - save_cache:
-          key: install-dep-cache-{{ checksum "yarn.lock" }}-{{ checksum ".yarn/releases/yarn-sources.js" }}
-          paths:
-            - .yarn
-      - run:
-          command: node .yarn/releases/yarn-sources.js node ./test/out/helpers/downloadElectron.js
-      - save_cache:
-          key: v-8.2.0-electron
-          paths:
-            - ~/.cache/electron
-
-  test:
-    parallelism: 4
-    docker:
-      - image: electronuserland/builder:wine-mono
-        environment:
-          JEST_JUNIT_OUTPUT_DIR: /tmp/test-reports/test.xml
-          TZ: Europe/Berlin
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - install-dep-cache-{{ checksum "yarn.lock" }}-{{ checksum ".yarn/releases/yarn-sources.js" }}
-      - restore_cache:
-          keys:
-            - v-8.2.0-electron
-      # because in the build job we use circleci docker image and circleci restores cache to original user home
-      - run:
-          command: |
-            rm -rf .yarn
-            mv /home/circleci/project/.yarn .yarn
-            mv .yarn/.pnp.js .pnp.js
-            mkdir -p ~/.cache
-            mv /home/circleci/.cache/electron ~/.cache/electron
-      - run:
-          # do not use yarn test because lint is done in the build job
-          command: |
-            node .yarn/releases/yarn-sources.js compile
-            node .yarn/releases/yarn-sources.js node ./test/out/helpers/runTests.js
-      - store_test_results:
-          path: /tmp/test-reports
-
+# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+# Use a package of configuration called an orb.
+orbs:
+  # Declare a dependency on the welcome-orb
+  welcome: circleci/welcome-orb@0.4.1
+# Orchestrate or schedule a set of jobs
 workflows:
-  version: 2
-  build_and_test:
+  # Name the workflow "welcome"
+  welcome:
+    # Run the welcome/run job in its own container
     jobs:
-      - build:
-          filters:
-            branches:
-              ignore:
-                - docs
-      - test:
-          filters:
-            branches:
-              ignore:
-                - docs
-          requires:
-            - build
+      - welcome/run
