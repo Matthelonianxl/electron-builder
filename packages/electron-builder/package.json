@@ -58,7 +58,7 @@
     "read-config-file": "6.0.0",
     "sanitize-filename": "^1.6.3",
     "update-notifier": "^4.1.0",
-    "yargs": "^15.3.1"
+    "yargs": "^16.0.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.1.0",
