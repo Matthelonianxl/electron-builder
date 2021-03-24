@@ -59,7 +59,7 @@
     "js-yaml": "^3.13.1",
     "lazy-val": "^1.0.4",
     "minimatch": "^3.0.4",
-    "normalize-package-data": "^2.5.0",
+    "normalize-package-data": "^3.0.0",
     "read-config-file": "6.0.0",
     "sanitize-filename": "^1.6.3",
     "semver": "^7.1.3",
