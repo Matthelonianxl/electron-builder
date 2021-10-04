@@ -30,7 +30,7 @@
     "electron-updater": "workspace:*",
     "fs-extra": "^9.0.0",
     "jest": "^25.2.4",
-    "jest-junit": "^10.0.0",
+    "jest-junit": "^13.0.0",
     "js-yaml": "^3.13.1",
     "path-sort": "^0.1.0",
     "semver": "^7.1.3",
