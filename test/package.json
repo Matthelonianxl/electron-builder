@@ -22,7 +22,7 @@
     "chalk": "^3.0.0",
     "ci-info": "^2.0.0",
     "decompress-zip": "^0.2.2",
-    "depcheck": "^0.9.2",
+    "depcheck": "^1.4.0",
     "dmg-builder": "workspace:*",
     "electron-builder": "workspace:*",
     "electron-builder-squirrel-windows": "workspace:*",
